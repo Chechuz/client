@@ -5,7 +5,6 @@ import { ClientService } from '../client.service';
 import { Client } from '../model/Client';
 import { ClientEditComponent } from '../client-edit/client-edit.component';
 import { DialogConfirmationComponent } from 'src/app/core/dialog-confirmation/dialog-confirmation.component';
-import { DIALOG_DATA, Dialog } from '@angular/cdk/dialog';
 
 @Component({
   selector: 'app-client-list',
