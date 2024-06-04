@@ -1,6 +1,33 @@
 <div class="container">
     <h1>Listado de Prestamos</h1>
 
+    <form [formGroup]="filterForm">
+        <mat-form-field>
+          <mat-label>Título del juego</mat-label>
+          <mat-select disableRipple formControlName="filterTitle">
+            <mat-option *ngFor="let game of games" [value]="game">{{game.title}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Cliente</mat-label>
+          <mat-select disableRipple formControlName="filterClient">
+            <mat-option *ngFor="let client of clients" [value]="client">{{client.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>    
+        <mat-form-field>
+          <mat-label>Fecha</mat-label>
+          <input matInput [matDatepicker]="searchDatePicker" formControlName="filterDate">
+          <mat-datepicker-toggle matSuffix [for]="searchDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker touchUi #searchDatePicker></mat-datepicker>
+        </mat-form-field>
+
+        <div class="buttons">
+            <button mat-stroked-button (click)="onCleanFilter()">Limpiar</button> 
+            <button mat-stroked-button (click)="onSearch()">Filtrar</button> 
+        </div> 
+      </form>   
+  
+
     <mat-table [dataSource]="dataSource"> 
         <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef> Identificador </mat-header-cell>

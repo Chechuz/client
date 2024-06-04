@@ -10,6 +10,7 @@ import { AuthorModule } from './author/author.module';
 import { GameModule } from './game/game.module';
 import { ClientModule } from './client/client.module';
 import { LoanModule } from './loan/loan.module';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,9 @@ import { LoanModule } from './loan/loan.module';
     BrowserAnimationsModule
   ],
 
-  providers: [],
+  providers: [
+    DatePipe
+  ],
   bootstrap: [AppComponent]
   
 })

@@ -1,1 +1,48 @@
-<p>loan-add works!</p>
+<div class="container">
+    <h1>Nuevo Préstamo</h1>
+  
+    <form [formGroup]="loanForm">
+      <mat-form-field>
+        <mat-label>Identificador</mat-label>
+        <input type="text" matInput placeholder="Identificador" disabled>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <mat-label>Nombre del Juego</mat-label>
+        <mat-select formControlName="game" required>
+          <mat-option *ngFor="let game of games" [value]="game">{{ game.title }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="loanForm.controls['game'].hasError('required')">Debe seleccionar un juego</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <mat-label>Nombre del Cliente</mat-label>
+        <mat-select formControlName="client" required>
+          <mat-option *ngFor="let client of clients" [value]="client">{{ client.name }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="loanForm.controls['client'].hasError('required')">Debe seleccionar un cliente</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <mat-label>Fecha de Préstamo</mat-label>
+        <input matInput [matDatepicker]="loanDatePicker" formControlName="loan_date" required>
+        <mat-datepicker-toggle matSuffix [for]="loanDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #loanDatePicker></mat-datepicker>
+        <mat-error *ngIf="loanForm.controls['loan_date'].hasError('required')">Debe seleccionar una fecha de préstamo</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <mat-label>Fecha de Devolución</mat-label>
+        <input matInput [matDatepicker]="returnDatePicker" formControlName="return_date" required>
+        <mat-datepicker-toggle matSuffix [for]="returnDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #returnDatePicker></mat-datepicker>
+        <mat-error *ngIf="loanForm.controls['return_date'].hasError('required')">Debe seleccionar una fecha de devolución</mat-error>
+      </mat-form-field>
+  
+      <div class="buttons">
+        <button mat-stroked-button (click)="onClose()">Cerrar</button>
+        <button mat-flat-button color="primary" (click)="onSave()">Guardar</button>
+      </div>
+    </form>
+  </div>
+  

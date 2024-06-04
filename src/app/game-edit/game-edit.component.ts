@@ -1,4 +1,4 @@
-import { Component, Inject, inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthorService } from 'src/app/author/author.service';
 import { Author } from 'src/app/author/model/Author';
@@ -13,6 +13,7 @@ import { Game } from '../game/model/Game';
   templateUrl: './game-edit.component.html',
   styleUrls: ['./game-edit.component.scss']
 })
+
 export class GameEditComponent implements OnInit {
 
   game: Game;

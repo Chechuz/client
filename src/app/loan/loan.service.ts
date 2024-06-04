@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Pageable } from '../core/model/page/Pageable';
 import { Observable } from 'rxjs';
@@ -9,20 +9,35 @@ import { Loan } from './model/Loan';
   providedIn: 'root'
 })
 export class LoanService {
+  private apiUrl = 'http://localhost:8080/loan';
 
   constructor(
     private http: HttpClient
   ) { }
   getLoans(pageable: Pageable): Observable<LoanPage> {
-    return this.http.post<LoanPage>('http://localhost:8080/loan', {pageable:pageable});
+    return this.http.post<LoanPage>(this.apiUrl, {pageable:pageable});
   }
 
   deleteLoan(idLoan : number): Observable<void> {
-    return this.http.delete<void>('http://localhost:8080/loan/'+idLoan);
+    return this.http.delete<void>(this.apiUrl + '/' + idLoan);
   }
   
-  getAllLoans(): Observable<Loan[]> {
-    return this.http.get<Loan[]>('http://localhost:8080/loan');
+  getAllLoans(title?: string, clientName?: string, date?: string): Observable<Loan[]> {
+    let params = new HttpParams();
+    if (title) {
+      params = params.set('titleGame', title);
+    }
+    if (clientName) {
+      params = params.set('clientName', clientName);
+    }
+    if (date) {
+      params = params.set('date', date);
+    }
+    return this.http.get<Loan[]>(this.apiUrl);
 }
+
+  saveLoan(loan: Loan): Observable<void> { 
+      return this.http.put<void>(this.apiUrl, loan);
+  }
 
 }

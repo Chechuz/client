@@ -9,6 +9,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogConfirmationComponent } from 'src/app/core/dialog-confirmation/dialog-confirmation.component';
 import { Client } from 'src/app/client/model/Client';
 import { Game } from 'src/app/game/model/Game';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { GameService } from 'src/app/game/game.service';
+import { ClientService } from 'src/app/client/client.service';
 
 @Component({
   selector: 'app-loan-list',
@@ -18,25 +21,42 @@ import { Game } from 'src/app/game/model/Game';
 export class LoanListComponent implements OnInit{
 
   games: Game[];
-  client: Client[];
+  clients: Client[];
   pageNumber: number = 0;
   pageSize: number = 5;
   totalElements: number = 0;
+  filterForm: FormGroup;
 
   dataSource = new MatTableDataSource<Loan>();
   displayedColumns: string[] = ['id', 'game', 'client', 'loan_date', 'return_date', 'action'];
 
   constructor(
     private loanService: LoanService,
+    private gameService: GameService,
+    private clientService: ClientService,
     public dialog: MatDialog,
+    private fb: FormBuilder,
   ){ }
 
 
   ngOnInit(): void {
+    this.filterForm = this.fb.group({
+      filterTitle: [''],
+      filterClient: [''],
+      filterDate: ['']
+    });
+      // Cargar juegos y clientes
+      this.gameService.getGames().subscribe(games => this.games = games);
+      this.clientService.getClients().subscribe(clients => this.clients = clients);
+
     this.loadPage();
   }
 
   loadPage(event?: PageEvent) {
+    const filters = this.filterForm.value;
+    const gameTitle = filters.filterTitle ? filters.filterTitle.title : null;
+    const clientName = filters.filterClient ? filters.filterClient.name : null;
+    const searchDate = filters.filterDate ? this.formatDate(filters.filterDate) : null;
 
     let pageable : Pageable =  {
         pageNumber: this.pageNumber,
@@ -58,8 +78,24 @@ export class LoanListComponent implements OnInit{
         this.pageSize = data.pageable.pageSize;
         this.totalElements = data.totalElements;
     });
-
 }  
+onCleanFilter(): void {
+  this.filterForm.reset();
+
+  this.onSearch();
+}
+
+onSearch(): void {
+
+  const filters = this.filterForm.value;
+  let gameTitle = filters.filterTitle ? filters.filterTitle.title : null;
+  let clientName = filters.filterClient ? filters.filterClient.name : null;
+  let searchDate = filters.filterDate ? this.formatDate(filters.filterDate) : null;
+
+  this.loanService.getAllLoans(gameTitle, clientName, searchDate).subscribe(
+    loans => this.dataSource.data = loans
+  );
+}
 
 createLoan() {      
   const dialogRef = this.dialog.open(LoanAddComponent, {
@@ -84,6 +120,13 @@ deleteLoan(loan: Loan) {
       }
   });
 }  
+
+formatDate(date: Date): string {
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear();
+  return `${year}-${month}-${day}`;
+}
 
 
 }
