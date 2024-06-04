@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { LoanListComponent } from './loan-list/loan-list.component';
 import { LoanAddComponent } from './loan-add/loan-add.component';
-import { LoanSearchComponent } from './loan-search/loan-search.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -26,7 +25,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   declarations: [
     LoanListComponent,
     LoanAddComponent,
-    LoanSearchComponent
   ],
   imports: [
     CommonModule,

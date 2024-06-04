@@ -53,10 +53,6 @@ export class LoanListComponent implements OnInit{
   }
 
   loadPage(event?: PageEvent) {
-    const filters = this.filterForm.value;
-    const gameTitle = filters.filterTitle ? filters.filterTitle.title : null;
-    const clientName = filters.filterClient ? filters.filterClient.name : null;
-    const searchDate = filters.filterDate ? this.formatDate(filters.filterDate) : null;
 
     let pageable : Pageable =  {
         pageNumber: this.pageNumber,
@@ -71,6 +67,7 @@ export class LoanListComponent implements OnInit{
         pageable.pageSize = event.pageSize
         pageable.pageNumber = event.pageIndex;
     }
+    
 
     this.loanService.getLoans(pageable).subscribe(data => {
         this.dataSource.data = data.content;
@@ -79,21 +76,41 @@ export class LoanListComponent implements OnInit{
         this.totalElements = data.totalElements;
     });
 }  
+
 onCleanFilter(): void {
   this.filterForm.reset();
 
   this.onSearch();
 }
 
-onSearch(): void {
+onSearch(event?: PageEvent) {
+  let pageable : Pageable =  {
+    pageNumber: this.pageNumber,
+    pageSize: this.pageSize,
+    sort: [{
+        property: 'id',
+        direction: 'ASC'
+    }]
+  }
+  if (event != null) {
+    pageable.pageSize = event.pageSize
+    pageable.pageNumber = event.pageIndex;
+  }
 
   const filters = this.filterForm.value;
-  let gameTitle = filters.filterTitle ? filters.filterTitle.title : null;
-  let clientName = filters.filterClient ? filters.filterClient.name : null;
-  let searchDate = filters.filterDate ? this.formatDate(filters.filterDate) : null;
+  const gameTitle = filters.filterTitle ? filters.filterTitle.title : null;
+  const clientName = filters.filterClient ? filters.filterClient.name : null;
+  const searchDate = filters.filterDate ? this.formatDate(filters.filterDate) : null;
+  console.log('Filtros:', { gameTitle, clientName, searchDate }); 
 
-  this.loanService.getAllLoans(gameTitle, clientName, searchDate).subscribe(
-    loans => this.dataSource.data = loans
+  this.loanService.getLoans(pageable,gameTitle, clientName, searchDate).subscribe(
+    data =>{
+      this.dataSource.data = data.content;
+      this.pageNumber = data.pageable.pageNumber;
+      this.pageSize = data.pageable.pageSize;
+     this.totalElements = data.totalElements; // Actualiza el total de elementos según los préstamos filtrados
+     console.log('Datos Filtrados:', data);
+    } 
   );
 }
 

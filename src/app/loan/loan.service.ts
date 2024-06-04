@@ -14,15 +14,27 @@ export class LoanService {
   constructor(
     private http: HttpClient
   ) { }
-  getLoans(pageable: Pageable): Observable<LoanPage> {
-    return this.http.post<LoanPage>(this.apiUrl, {pageable:pageable});
+
+  getLoans(pageable: Pageable,title?: string, clientName?: string, date?: string): Observable<LoanPage> {
+    let params = new HttpParams();
+    if (title) {
+      params = params.set('titleGame', title);
+    }
+    if (clientName) {
+      params = params.set('clientName', clientName);
+    }
+    if (date) {
+      params = params.set('date', date);
+    }
+    const body = { pageable };
+    return this.http.post<LoanPage>(this.apiUrl, body, { params });
   }
 
   deleteLoan(idLoan : number): Observable<void> {
     return this.http.delete<void>(this.apiUrl + '/' + idLoan);
   }
   
-  getAllLoans(title?: string, clientName?: string, date?: string): Observable<Loan[]> {
+ /*  getAllLoans(title?: string, clientName?: string, date?: string): Observable<Loan[]> {
     let params = new HttpParams();
     if (title) {
       params = params.set('titleGame', title);
@@ -34,7 +46,7 @@ export class LoanService {
       params = params.set('date', date);
     }
     return this.http.get<Loan[]>(this.apiUrl);
-}
+}*/
 
   saveLoan(loan: Loan): Observable<void> { 
       return this.http.put<void>(this.apiUrl, loan);
