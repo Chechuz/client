@@ -33,20 +33,6 @@ export class LoanService {
   deleteLoan(idLoan : number): Observable<void> {
     return this.http.delete<void>(this.apiUrl + '/' + idLoan);
   }
-  
- /*  getAllLoans(title?: string, clientName?: string, date?: string): Observable<Loan[]> {
-    let params = new HttpParams();
-    if (title) {
-      params = params.set('titleGame', title);
-    }
-    if (clientName) {
-      params = params.set('clientName', clientName);
-    }
-    if (date) {
-      params = params.set('date', date);
-    }
-    return this.http.get<Loan[]>(this.apiUrl);
-}*/
 
   saveLoan(loan: Loan): Observable<void> { 
       return this.http.put<void>(this.apiUrl, loan);

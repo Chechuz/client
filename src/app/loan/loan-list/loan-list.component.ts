@@ -18,6 +18,7 @@ import { ClientService } from 'src/app/client/client.service';
   templateUrl: './loan-list.component.html',
   styleUrls: ['./loan-list.component.scss']
 })
+
 export class LoanListComponent implements OnInit{
 
   games: Game[];
@@ -53,7 +54,6 @@ export class LoanListComponent implements OnInit{
   }
 
   loadPage(event?: PageEvent) {
-
     let pageable : Pageable =  {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
@@ -62,13 +62,10 @@ export class LoanListComponent implements OnInit{
             direction: 'ASC'
         }]
     }
-
     if (event != null) {
         pageable.pageSize = event.pageSize
         pageable.pageNumber = event.pageIndex;
     }
-    
-
     this.loanService.getLoans(pageable).subscribe(data => {
         this.dataSource.data = data.content;
         this.pageNumber = data.pageable.pageNumber;
@@ -79,7 +76,6 @@ export class LoanListComponent implements OnInit{
 
 onCleanFilter(): void {
   this.filterForm.reset();
-
   this.onSearch();
 }
 
@@ -96,7 +92,6 @@ onSearch(event?: PageEvent) {
     pageable.pageSize = event.pageSize
     pageable.pageNumber = event.pageIndex;
   }
-
   const filters = this.filterForm.value;
   const gameTitle = filters.filterTitle ? filters.filterTitle.title : null;
   const clientName = filters.filterClient ? filters.filterClient.name : null;
@@ -128,7 +123,6 @@ deleteLoan(loan: Loan) {
   const dialogRef = this.dialog.open(DialogConfirmationComponent, {
       data: { title: "Eliminar autor", description: "Atención si borra el autor se perderán sus datos.<br> ¿Desea eliminar el autor?" }
   });
-
   dialogRef.afterClosed().subscribe(result => {
       if (result) {
           this.loanService.deleteLoan(loan.id).subscribe(result =>  {

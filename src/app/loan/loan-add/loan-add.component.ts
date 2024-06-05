@@ -16,13 +16,12 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./loan-add.component.scss']
 })
 export class LoanAddComponent implements OnInit {
-  loanForm: FormGroup;
+  loanForm: FormGroup;;
   games: Game[] = [];
   clients: Client[] = [];
 
   constructor(
     private fb: FormBuilder,
-    private datePipe: DatePipe,
     private snackBar: MatSnackBar,
     private loanService: LoanService,
     private gameService: GameService,
@@ -48,24 +47,25 @@ export class LoanAddComponent implements OnInit {
     if (this.loanForm.invalid) {
       return;
     }
-
     const loanData = this.loanForm.getRawValue();
+    // Verificar si la fecha de fin es anterior a la fecha de inicio
+    if ((loanData.loan_date) > (loanData.return_date)) {
+      this.showAlert('La fecha de fin no puede ser anterior a la fecha de inicio.');
+      return;
+    } 
     const diffInDays = this.calculateDateDifferenceInDays(loanData.loan_date, loanData.return_date);
-  // Obtener las partes de la fecha y formatearlas
-    const loanDate = this.formatDate(loanData.loan_date);
-    const returnDate = this.formatDate(loanData.return_date);
-
-    console.log('Datos del formulario:', loanData);
-
+    const selectedGame = this.games.find(game => game=== loanData.game);
+    const selectedClient = this.clients.find(client => client === loanData.client);
+    
     if (diffInDays > 14) {
       this.showAlert('El período de préstamo máximo es de 14 días. Por favor, seleccione un período más corto.');
     } else {
       const newLoan: Loan = {
         id: null,
-        game: loanData.game.id,
-        client: loanData.client.id,
-        loan_date: loanData.loanDate,
-        return_date: loanData.returnDate
+        game: selectedGame,
+        client: selectedClient,
+        loan_date:loanData.loan_date,
+        return_date: loanData.return_date
       };
 
       this.loanService.saveLoan(newLoan).subscribe({
@@ -79,7 +79,7 @@ export class LoanAddComponent implements OnInit {
   }
 
   onClose(): void {
-    this.dialogRef.close(); // Cierra el diálogo
+    this.dialogRef.close();
   }
 
   private calculateDateDifferenceInDays(startDate: Date, endDate: Date): number {
@@ -94,11 +94,5 @@ export class LoanAddComponent implements OnInit {
       duration: 5000
     });
   }
-  // Método para formatear la fecha
-  formatDate(date: Date): string {
-    const year = date.getFullYear().toString().slice(4); // Obtiene los dígitos del año
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Agrega un cero al principio si el mes es de un solo dígito
-    const day = date.getDate().toString().padStart(2, '0'); // Agrega un cero al principio si el día es de un solo dígito
-    return `${year}-${month}-${day}`;
-  }
+
 }
