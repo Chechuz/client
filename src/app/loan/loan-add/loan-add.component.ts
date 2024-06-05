@@ -56,7 +56,7 @@ export class LoanAddComponent implements OnInit {
     const diffInDays = this.calculateDateDifferenceInDays(loanData.loan_date, loanData.return_date);
     const selectedGame = this.games.find(game => game=== loanData.game);
     const selectedClient = this.clients.find(client => client === loanData.client);
-    
+    // Verificar la duracion del prestamo
     if (diffInDays > 14) {
       this.showAlert('El período de préstamo máximo es de 14 días. Por favor, seleccione un período más corto.');
     } else {
@@ -73,7 +73,9 @@ export class LoanAddComponent implements OnInit {
           this.showAlert('Préstamo guardado exitosamente.');
           this.dialogRef.close(true); // Cierra el diálogo y pasa un valor de retorno
         },
-        error: () => this.showAlert('Ocurrió un error al guardar el préstamo.')
+        error: (error) => {
+          this.showAlert(error.error); // Mostrar el mensaje de error recibido del backend
+        }
       });
     }
   }

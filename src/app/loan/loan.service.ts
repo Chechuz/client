@@ -34,8 +34,8 @@ export class LoanService {
     return this.http.delete<void>(this.apiUrl + '/' + idLoan);
   }
 
-  saveLoan(loan: Loan): Observable<void> { 
-      return this.http.put<void>(this.apiUrl, loan);
+  saveLoan(loan: Loan): Observable<any> { 
+      return this.http.put<any>(this.apiUrl, loan);
   }
 
 }
