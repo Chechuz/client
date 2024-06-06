@@ -11,7 +11,7 @@ import { Game } from '../model/Game';
   templateUrl: './game-list.component.html',
   styleUrls: ['./game-list.component.scss']
 })
-export class GameListComponent {
+export class GameListComponent implements OnInit{
   categories: Category[];
   games: Game[];
   filterCategory: Category;

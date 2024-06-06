@@ -9,6 +9,10 @@ import { CategoryModule } from './category/category.module';
 import { AuthorModule } from './author/author.module';
 import { GameModule } from './game/game.module';
 import { ClientModule } from './client/client.module';
+import { LoanModule } from './loan/loan.module';
+import { DatePipe } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -22,10 +26,15 @@ import { ClientModule } from './client/client.module';
     ClientModule,
     AuthorModule,
     GameModule,
+    LoanModule,
+    MatTableModule,
+    MatButtonModule,
     BrowserAnimationsModule
   ],
 
-  providers: [],
+  providers: [
+    DatePipe
+  ],
   bootstrap: [AppComponent]
   
 })
