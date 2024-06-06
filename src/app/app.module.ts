@@ -11,6 +11,8 @@ import { GameModule } from './game/game.module';
 import { ClientModule } from './client/client.module';
 import { LoanModule } from './loan/loan.module';
 import { DatePipe } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { DatePipe } from '@angular/common';
     AuthorModule,
     GameModule,
     LoanModule,
+    MatTableModule,
+    MatButtonModule,
     BrowserAnimationsModule
   ],
 

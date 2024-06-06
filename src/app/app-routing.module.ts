@@ -11,8 +11,8 @@ const routes: Routes = [
   { path: 'categories', component: CategoryListComponent },
   { path: 'authors', component: AuthorListComponent},
   { path: 'games', component: GameListComponent},
-  {path: 'clients', component: ClientListComponent},
-  {path: 'loans', component: LoanListComponent}
+  { path: 'clients', component: ClientListComponent},
+  { path: 'loans', component: LoanListComponent}
 ];
 
 @NgModule({
@@ -20,7 +20,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-/**{
-  path: 'customers'
-  loadChildren: () => import('./customers/customers.module').then(m => m.CustomersModule)
-}**/
