@@ -1,9 +1,27 @@
-# Client
+# 🎲 Ludoteca Tan
 
-Learning Angular.
+Aplicación web creada con **Angular** como Framework para generar la UI del cliente. Esta aplicación maneja los registros de una ludoteca.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.14.
+## 🚀 Funcionalidades
 
-## Further help
+Puedes:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- 👀 **Visualizar los juegos existentes**: Cargar nuevos o editarlos, y filtrar la búsqueda.
+- 🗂️ **Ver las categorías**: Editarlas o agregar nuevas.
+- 🧑‍🤝‍🧑 **Ver los nombres de los Clientes**: Editarlos o añadir clientes.
+- 📋 **Gestionar préstamos de los juegos**: 
+  - Verás un registro de los juegos que han sido prestados, en qué fechas y a qué cliente.
+  - Puedes añadir nuevos préstamos o eliminar préstamos existentes.
+  - Para la búsqueda en el registro de préstamos puedes filtrar por Juego, por Cliente o por Fecha.
+
+## 💻 Client
+
+### Aprendiendo Angular
+
+Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-cli) versión 16.2.14.
+
+## 📚 Ayuda Adicional
+
+Para obtener más ayuda sobre Angular CLI, usa `ng help` o consulta la [Guía y Referencia de Comandos de Angular CLI](https://angular.io/cli).
+
+---
