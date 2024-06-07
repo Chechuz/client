@@ -14,8 +14,26 @@ Puedes:
   - Puedes añadir nuevos préstamos o eliminar préstamos existentes.
   - Para la búsqueda en el registro de préstamos puedes filtrar por Juego, por Cliente o por Fecha.
 
-## 💻 Client
 
+## 💻 Comandos Útiles
+
+Aquí tienes algunos comandos que puedes utilizar en este repositorio:
+
+### Comandos para Angular
+
+- `ng serve`: Inicia un servidor de desarrollo y abre la aplicación en el navegador.
+- `ng build`: Compila la aplicación en un directorio `dist/`.
+
+### Comandos para Git
+
+- `git clone <url>`: Clona este repositorio en tu máquina local.
+- `git pull`: Actualiza tu repositorio local con los últimos cambios del repositorio remoto.
+- `git push`: Sube tus cambios locales al repositorio remoto.
+- `git branch`: Muestra las ramas disponibles en tu repositorio.
+- `git checkout <branch>`: Cambia a la rama especificada.
+- `git merge <branch>`: Fusiona la rama especificada en tu rama actual.
+---
+## 💻 Client
 ### Aprendiendo Angular
 
 Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-cli) versión 16.2.14.
